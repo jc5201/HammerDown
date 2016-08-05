@@ -15,7 +15,7 @@ public class CharacterManager : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {
-	
+        state = CharacterStates.Rest;
 	}
 	
 	// Update is called once per frame

@@ -133,13 +133,13 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    void InputStart()
+    public void InputStart()
     {
         cmd1 = "";
         cmd2 = "";
     }
 
-    void InputEnd()
+    public void InputEnd()
     {
         GM.Process(cmd1, cmd2);
     }
