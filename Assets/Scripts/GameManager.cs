@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour {
     int turn = 0;
     int timeInterval = 0;
     
-    GameObject Character1;
-    GameObject Character2;
+    CharacterManager Character1;
+    CharacterManager Character2;
     InputManager IM;
     EventManager EM;
     CommandCompare CC;
@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         turn = 0;
         timeInterval = 1;
-        Character1 = GameObject.Find("Character1");
-        Character2 = GameObject.Find("Character2");
+        Character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
+        Character2 = GameObject.Find("Character2").GetComponent<CharacterManager>();
         IM = GetComponent<InputManager>();
         CC = GetComponent<CommandCompare>();
         EM = GetComponent<EventManager>();
+
+
+        TurnStart();
     }
 
     void Update ()
@@ -32,14 +35,15 @@ public class GameManager : MonoBehaviour {
     void TurnStart()
     {
         turn += 1;
-
       //if(isCharacterCanMove(Character1) && isCharacterCanMove(Character2))
         Input();
+
     }
 
     void TurnEnd()
     {
-
+        if(!isGameOver())
+            TurnStart();
     }
 
     void Input()
@@ -48,7 +52,7 @@ public class GameManager : MonoBehaviour {
         Invoke(IM.InputEnd(), timeInterval);
     }
 
-    void Process(GameObject character, string characterCommand)
+    public void Process(string character, string characterCommand)
     {
         int i;
         for(i = 0; i < characterCommand.Length; i++)
@@ -69,6 +73,15 @@ public class GameManager : MonoBehaviour {
         if(Character.state != Stunned )
     }
     */
+    
+    bool isGameOver()
+    {
+        /*
+        if(chracter1.HP < 0 || charcter2.HP
+            return true;
+        */
+        return true;
+    }
 }
 
 
