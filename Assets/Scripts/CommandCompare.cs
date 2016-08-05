@@ -12,4 +12,9 @@ public class CommandCompare : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void CommandCmp()
+    {
+          
+    }
 }

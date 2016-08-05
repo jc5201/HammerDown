@@ -3,7 +3,12 @@ using System.Collections;
 
 public class CharacterManager : MonoBehaviour {
 
-	// Use this for initialization
+    public CharacterStates state
+    {
+        get; set;
+    }
+    
+    // Use this for initialization
 	void Start () {
 	
 	}
@@ -12,4 +17,15 @@ public class CharacterManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public enum CharacterStates
+
+    {
+        Down,
+        Die,
+        Jump,
+        Attack1,
+        Attack2
+    }
+
 }

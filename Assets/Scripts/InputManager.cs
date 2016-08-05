@@ -46,8 +46,13 @@ public class InputManager : MonoBehaviour {
 
     }
 
-    void Next()
+    void InputStart()
     {
 
     }
+
+    void InputEnd()
+    {
+    }
+
 }
