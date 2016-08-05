@@ -7,6 +7,11 @@ public class CharacterManager : MonoBehaviour {
     {
         get; set;
     }
+
+    public int HP
+    {
+        get; set;
+    }
     
     // Use this for initialization
 	void Start () {
@@ -21,11 +26,14 @@ public class CharacterManager : MonoBehaviour {
     public enum CharacterStates
 
     {
+        Rest,
+        Dead,
+        Move,
         Down,
-        Die,
         Jump,
-        Attack1,
-        Attack2
+        Attack,
+        Guard,
+        Grab
     }
 
 }

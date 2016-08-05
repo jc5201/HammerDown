@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
     CharacterManager Character2;
     InputManager IM;
     EventManager EM;
-    CommandCompare CC;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +19,6 @@ public class GameManager : MonoBehaviour {
         Character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
         Character2 = GameObject.Find("Character2").GetComponent<CharacterManager>();
         IM = GetComponent<InputManager>();
-        CC = GetComponent<CommandCompare>();
         EM = GetComponent<EventManager>();
 
 
@@ -52,27 +50,26 @@ public class GameManager : MonoBehaviour {
         Invoke(IM.InputEnd(), timeInterval);
     }
 
-    public void Process(string character, string characterCommand)
+    public void Process(string character1Cmd, string character2Cmd)
     {
         int i;
-        for(i = 0; i < characterCommand.Length; i++)
+        for(i = 0; i < character1Cmd.Length; i++)
+        { 
+        }
+        for(i = 0; i < character2Cmd.Length; i++)
         {
 
-            /*
-            input form 
-            characterCommand[i]
-
-            characterState update
-            */
         }
               
     }
-    /*
-    bool isCharacterCanMove(GameObject Character)
+   
+    bool isCharacterCanMove(CharacterManager Character)
     {
-        if(Character.state != Stunned )
+        if (Character.state != CharacterManager.CharacterStates.Rest)
+            return true;
+        return false;
     }
-    */
+    
     
     bool isGameOver()
     {
