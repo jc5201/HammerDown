@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Timers;
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour {
     EventManager EM;
     Timer timer = new Timer();
 
+    Slider timeSlider;
+    DateTime initTime;
+
     // Use this for initialization
     void Start() {
         turn = 0;
@@ -26,13 +30,27 @@ public class GameManager : MonoBehaviour {
         IM = GetComponent<InputManager>();
         EM = GetComponent<EventManager>();
 
+        timeSlider = GameObject.Find("TimeSlider").GetComponent<Slider>();
 
         TurnStart();
+    }
+
+    void Update()
+    {
+        if (timer.Enabled)
+        {
+            timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks)/10000;
+        }
+        else
+        {
+            timeSlider.value = 0;
+        }
     }
 
     void TurnStart()
     {
         turn += 1;
+        GameObject.Find("TurnText").GetComponent<Text>().text = turn.ToString("D3");
         Input();
 
     }
@@ -49,6 +67,7 @@ public class GameManager : MonoBehaviour {
         
         IM.InputStart();
         timer.Start();
+        initTime = DateTime.Now;
     }
 
     void TimerEventProcessor(object myObject, EventArgs myEventArgs)
