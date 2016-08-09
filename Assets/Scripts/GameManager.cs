@@ -78,7 +78,11 @@ public class GameManager : MonoBehaviour
     {
         IM.InputStart();
         initTime = DateTime.Now;
-        timer.Start();
+        if(Character1.state == CharacterManager.CharacterStates.Stand || Character1.state == CharacterManager.CharacterStates.Stand) timer.Start();
+        else
+        {
+            Process("", "");
+        }
         
     }
 
@@ -93,6 +97,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("Process Start\n" + character1Cmd + "\n" + character2Cmd);
         string line;
         string[] CommandData;
+
+        if (Character1.state != CharacterManager.CharacterStates.Stand) character1Cmd = "";
+        if (Character2.state != CharacterManager.CharacterStates.Stand) character2Cmd = "";
+        if (Character1.state == CharacterManager.CharacterStates.Damage) Character1.state = CharacterManager.CharacterStates.Stand;
+        if (Character2.state == CharacterManager.CharacterStates.Damage) Character2.state = CharacterManager.CharacterStates.Stand;
 
         using (StreamReader CommandList = new StreamReader("Assets/CommandList.csv"))
         {
