@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Timers;
 using System.IO;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 
@@ -87,16 +88,18 @@ public class GameManager : MonoBehaviour {
             while ((line = CommandList.ReadLine()) != null)
             {
                 CommandData = line.Split(',');
-                if (CommandData[0] == character1Cmd)    Character1.
-                
+                if (CommandData[0] == character1Cmd) Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
+                if (CommandData[0] == character2Cmd) Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
             }
         }
+
+        Run();
 
     }
     
     void Run()
     {
-
+        
     }
 
     bool isGameOver()

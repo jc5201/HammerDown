@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class CharacterManager : MonoBehaviour {
         get; set;
     }
 
-    public string[] command         
+    public List <string> command         
     {
         get; set;
     }
