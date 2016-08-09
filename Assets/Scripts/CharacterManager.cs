@@ -32,8 +32,16 @@ public class CharacterManager : MonoBehaviour {
         state = CharacterStates.Stand;
         HP = 100;
         command = new List<string>();
-        if (gameObject.name == "Character1") num = 1;
-        else num = 2;
+        if (gameObject.name == "Character1")
+        {
+            num = 1;
+            position = 8;
+        }
+        else
+        {
+            num = 2;
+            position = 12;
+        }
         SliderCom = GameObject.Find("Slider" + num.ToString()).GetComponent<Slider>();
 	}
 	
