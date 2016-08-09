@@ -42,7 +42,6 @@ public class CharacterManager : MonoBehaviour {
 	}
 
     public enum CharacterStates
-
     {
         Stand,
         Damage,
@@ -51,6 +50,7 @@ public class CharacterManager : MonoBehaviour {
         Down, Standing,
         Crouch,
         Jump,
+        Attack_fast,
         Attack_High, Attack_Middle, Attack_Low,
         Guard_Middle, Guard_Low,
         Grab_High, Grab_Middle, Grab_Low,
