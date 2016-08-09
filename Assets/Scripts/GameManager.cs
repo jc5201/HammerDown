@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
 
     void TurnEnd()
     {
+        Debug.Log("Turn End Start");
         if (!isGameOver())
             TurnStart();
         // else gameResult ...etc
@@ -132,7 +133,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Run Start");
         if (Character1.command.Count > 1)
         {
-            EM.UpdateState(1, Character1.command[0]);
             switch (Character1.command[0])
             {
                 case "delay":
@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
                     Character1.state = CharacterManager.CharacterStates.Grab_Low;
                     break;
             }
+            EM.UpdateState(1, Character1.state.ToString());
             Character1.command.RemoveAt(0);
         }
         else
@@ -196,7 +197,6 @@ public class GameManager : MonoBehaviour
 
         if (Character2.command.Count > 1)
         {
-            EM.UpdateState(2, Character2.command[0]);
             switch (Character2.command[0])
             {
                 case "delay":
@@ -251,13 +251,15 @@ public class GameManager : MonoBehaviour
                     Character2.state = CharacterManager.CharacterStates.Grab_Low;
                     break;
             }
+            EM.UpdateState(2, Character2.state.ToString());
             Character2.command.RemoveAt(0);
         }
         else
         {
             EM.UpdateState(2, "Stand");
         }
-        
+        Debug.Log("Run - state update");
+
         Attack();
         Grab();
         if (Character1.isMoving()) Character1.Move();
