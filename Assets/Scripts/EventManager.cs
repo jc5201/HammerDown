@@ -29,6 +29,7 @@ public class EventManager : MonoBehaviour {
         }
     }
 
+    void UpdateState(int code, string state)
     {
         // TODO: Sprite 교ㅕ체
     }
