@@ -4,8 +4,10 @@ using System;
 using System.Collections;
 using System.Timers;
 using System.IO;
+using System.Linq;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     const int MAXTURN = 500;
     int turn = 0;
@@ -21,7 +23,8 @@ public class GameManager : MonoBehaviour {
     DateTime initTime;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         turn = 0;
         timeInterval = 1;
         timer.Interval = timeInterval;
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour {
     {
         if (timer.Enabled)
         {
-            timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks)/10000;
+            timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks) / 10000;
         }
         else
         {
@@ -64,8 +67,8 @@ public class GameManager : MonoBehaviour {
     }
 
     void Input()
-    { 
-        
+    {
+
         IM.InputStart();
         timer.Start();
         initTime = DateTime.Now;
@@ -87,21 +90,24 @@ public class GameManager : MonoBehaviour {
             while ((line = CommandList.ReadLine()) != null)
             {
                 CommandData = line.Split(',');
-                if (CommandData[0] == character1Cmd)    Character1.
-                
+                if (CommandData[0] == character1Cmd) Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
+                if (CommandData[0] == character2Cmd) Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
             }
         }
 
+        Run();
+
     }
-    
+
     void Run()
     {
-
+        EM.UpdateState(1, Character1.command[0]);
+        EM.UpdateState()
     }
 
     bool isGameOver()
     {
-        if(Character1.HP <= 0 || Character2.HP <= 0 || turn >= MAXTURN)
+        if (Character1.HP <= 0 || Character2.HP <= 0 || turn >= MAXTURN)
             return true;
         return false;
     }
