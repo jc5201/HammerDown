@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     Slider timeSlider;
     DateTime initTime;
     Text turnText;
+    string tempText = "000";
 
     // Use this for initialization
     void Start()
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        turnText.text = tempText;
         if (timer.Enabled)
         {
             timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks) / 10000;
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
     void TurnStart()
     {
         turn += 1;
-        turnText.text = turn.ToString("D3");
+        tempText = turn.ToString("D3");
         Input();
 
     }
