@@ -21,12 +21,13 @@ public class GameManager : MonoBehaviour
 
     Slider timeSlider;
     DateTime initTime;
+    Text turnText;
 
     // Use this for initialization
     void Start()
     {
         turn = 0;
-        timeInterval = 1;
+        timeInterval = 1000;
         timer.Interval = timeInterval;
         timer.Elapsed += new ElapsedEventHandler(TimerEventProcessor);
         Character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
         EM = GetComponent<EventManager>();
 
         timeSlider = GameObject.Find("TimeSlider").GetComponent<Slider>();
+        turnText = GameObject.Find("TurnText").GetComponent<Text>();
+
 
         TurnStart();
     }
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
     void TurnStart()
     {
         turn += 1;
-        GameObject.Find("TurnText").GetComponent<Text>().text = turn.ToString("D3");
+        turnText.text = turn.ToString("D3");
         Input();
 
     }
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void Process(string character1Cmd, string character2Cmd)
     {
+        /*
         string line;
         string[] CommandData;
 
@@ -102,13 +106,14 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
+        */
         Run();
 
     }
 
     void Run()
     {
+        /*
         if (Character1.command.Count > 1)
         {
             EM.UpdateState(1, Character1.command[0]);
@@ -128,6 +133,8 @@ public class GameManager : MonoBehaviour
         {
             EM.UpdateState(2, "Rest");
         }
+        */
+        TurnEnd();
     }
 
     bool isGameOver()

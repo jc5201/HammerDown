@@ -11,7 +11,7 @@ public class EventManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
-        character1 = GameObject.Find("Character2").GetComponent<CharacterManager>();
+        character2 = GameObject.Find("Character2").GetComponent<CharacterManager>();
     }
     
 	
@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour {
         if (position2 != character2.position)
         {
             position2 = character2.position;
-            character2.gameObject.transform.position = new Vector3(-10 + position2, character2.gameObject.transform.position.y, character2.gameObject.transform.position.z);
+            character2.gameObject.transform.position = new Vector3( -10 + position2, character2.gameObject.transform.position.y, character2.gameObject.transform.position.z);
         }
     }
 
