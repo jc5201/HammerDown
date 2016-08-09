@@ -109,12 +109,12 @@ public class GameManager : MonoBehaviour
             while ((line = CommandList.ReadLine()) != null)
             {
                 CommandData = line.Split(',');
-                if (CommandData[0] == character1Cmd.ToUpper())
+                if (CommandData[0].ToUpper() == character1Cmd.ToUpper())
                 {
                     Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
                     Character1.command.Add(CommandData[1]);
                 }
-                if (CommandData[0] == character2Cmd.ToUpper())
+                if (CommandData[0].ToUpper() == character2Cmd.ToUpper())
                 {
                     Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
                     Character2.command.Add(CommandData[1]);
