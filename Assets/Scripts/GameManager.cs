@@ -266,6 +266,12 @@ public class GameManager : MonoBehaviour
         if (Character1.isMoving()) Character1.Move();
         if (Character2.isMoving()) Character2.Move();
 
+        while (Character1.position >= Character2.position)
+        {
+            Character1.position -= 0.5f;
+            Character2.position += 0.5f;
+        }
+
         TurnEnd();
     }
 
