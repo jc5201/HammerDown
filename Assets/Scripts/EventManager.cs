@@ -42,6 +42,5 @@ public class EventManager : MonoBehaviour {
         {
             character2.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = sprite[(int)System.Enum.Parse(typeof(CharacterManager.CharacterStates), state)];
         }
-        // TODO: Sprite 교ㅕ체
     }
 }

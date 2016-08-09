@@ -99,12 +99,12 @@ public class GameManager : MonoBehaviour
             while ((line = CommandList.ReadLine()) != null)
             {
                 CommandData = line.Split(',');
-                if (CommandData[0] == character1Cmd)
+                if (CommandData[0] == character1Cmd.ToUpper())
                 {
                     Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
                     Character1.command.Add(CommandData[1]);
                 }
-                if (CommandData[0] == character2Cmd)
+                if (CommandData[0] == character2Cmd.ToUpper())
                 {
                     Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
                     Character2.command.Add(CommandData[1]);
@@ -122,22 +122,136 @@ public class GameManager : MonoBehaviour
         if (Character1.command.Count > 1)
         {
             EM.UpdateState(1, Character1.command[0]);
+            switch (Character1.command[0])
+            {
+                case "delay":
+                    Character1.state = CharacterManager.CharacterStates.Stand;
+                    break;
+                case "moving-front": 
+                    Character1.state = CharacterManager.CharacterStates.Move;
+                    break;
+                case "dash-front":
+                    Character1.state = CharacterManager.CharacterStates.Dash;
+                    break;
+                case "moving-front-half":
+                    Character1.state = CharacterManager.CharacterStates.Move_Half;
+                    break;
+                case "moving-back":
+                    Character1.state = CharacterManager.CharacterStates.Move_Back;
+                    break;
+                case "dash-back":
+                    Character1.state = CharacterManager.CharacterStates.Dash_Back;
+                    break;
+                case "moving-back-half":
+                    Character1.state = CharacterManager.CharacterStates.Move_Back_Half;
+                    break;
+                case "punch-middle":
+                    Character1.state = CharacterManager.CharacterStates.Attack_Middle;
+                    break;
+                case "punch-high":
+                    Character1.state = CharacterManager.CharacterStates.Attack_High;
+                    break;
+                case "punch-low":
+                    Character1.state = CharacterManager.CharacterStates.Attack_Low;
+                    break;
+                case "punch-middle-fast":
+                    Character1.state = CharacterManager.CharacterStates.Attack_Fast;
+                    break;
+                case "guard-middle":
+                    Character1.state = CharacterManager.CharacterStates.Guard_Middle;
+                    break;
+                case "guard-low":
+                    Character1.state = CharacterManager.CharacterStates.Guard_Low;
+                    break;
+                case "sit":
+                    Character1.state = CharacterManager.CharacterStates.Crouch;
+                    break;
+                case "grab-middle":
+                    Character1.state = CharacterManager.CharacterStates.Grab_Middle;
+                    break;
+                case "grab-high":
+                    Character1.state = CharacterManager.CharacterStates.Grab_High;
+                    break;
+                case "grab-low":
+                    Character1.state = CharacterManager.CharacterStates.Grab_Low;
+                    break;
+            }
             Character1.command.RemoveAt(0);
         }
         else
         {
-            EM.UpdateState(1, "Rest");
+            EM.UpdateState(1, "Stand");
         }
 
         if (Character2.command.Count > 1)
         {
             EM.UpdateState(2, Character2.command[0]);
+            switch (Character2.command[0])
+            {
+                case "delay":
+                    Character2.state = CharacterManager.CharacterStates.Stand;
+                    break;
+                case "moving-front":
+                    Character2.state = CharacterManager.CharacterStates.Move;
+                    break;
+                case "dash-front":
+                    Character2.state = CharacterManager.CharacterStates.Dash;
+                    break;
+                case "moving-front-half":
+                    Character2.state = CharacterManager.CharacterStates.Move_Half;
+                    break;
+                case "moving-back":
+                    Character2.state = CharacterManager.CharacterStates.Move_Back;
+                    break;
+                case "dash-back":
+                    Character2.state = CharacterManager.CharacterStates.Dash_Back;
+                    break;
+                case "moving-back-half":
+                    Character2.state = CharacterManager.CharacterStates.Move_Back_Half;
+                    break;
+                case "punch-middle":
+                    Character2.state = CharacterManager.CharacterStates.Attack_Middle;
+                    break;
+                case "punch-high":
+                    Character2.state = CharacterManager.CharacterStates.Attack_High;
+                    break;
+                case "punch-low":
+                    Character2.state = CharacterManager.CharacterStates.Attack_Low;
+                    break;
+                case "punch-middle-fast":
+                    Character2.state = CharacterManager.CharacterStates.Attack_Fast;
+                    break;
+                case "guard-middle":
+                    Character2.state = CharacterManager.CharacterStates.Guard_Middle;
+                    break;
+                case "guard-low":
+                    Character2.state = CharacterManager.CharacterStates.Guard_Low;
+                    break;
+                case "sit":
+                    Character2.state = CharacterManager.CharacterStates.Crouch;
+                    break;
+                case "grab-middle":
+                    Character2.state = CharacterManager.CharacterStates.Grab_Middle;
+                    break;
+                case "grab-high":
+                    Character2.state = CharacterManager.CharacterStates.Grab_High;
+                    break;
+                case "grab-low":
+                    Character2.state = CharacterManager.CharacterStates.Grab_Low;
+                    break;
+            }
             Character2.command.RemoveAt(0);
         }
         else
         {
-            EM.UpdateState(2, "Rest");
+            EM.UpdateState(2, "Stand");
         }
+        
+        Attack();
+        Grab();
+        if (Character1.isMoving()) Character1.Move();
+        if (Character2.isMoving()) Character2.Move();
+
         TurnEnd();
     }
 
@@ -146,6 +260,162 @@ public class GameManager : MonoBehaviour
         if (Character1.HP <= 0 || Character2.HP <= 0 || turn >= MAXTURN)
             return true;
         return false;
+    }
+
+    void Attack()
+    {
+        if (Character1.isAttack())
+        {
+            if (Math.Abs(Character1.position - Character2.position) <= 1)
+            {
+                if (Character2.isAttack())
+                {
+                    int hit1 = int.Parse(Character1.command[0]);
+                    Character1.Damage(int.Parse(Character2.command[0]));
+                    Character2.Damage(hit1);
+                }
+                else if (Character2.isGuard())
+                {
+                    if (Character1.state == CharacterManager.CharacterStates.Attack_Low && Character2.state == CharacterManager.CharacterStates.Guard_Middle)
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                    if (Character1.state == CharacterManager.CharacterStates.Attack_Middle && Character2.state == CharacterManager.CharacterStates.Guard_Low)
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                }
+                else if (Character1.state == CharacterManager.CharacterStates.Attack_High)
+                {
+                    if (Character2.state == CharacterManager.CharacterStates.Crouch || Character2.state == CharacterManager.CharacterStates.Down) ;
+                    else
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                }
+                else if (Character1.state == CharacterManager.CharacterStates.Attack_Low)
+                {
+                    if (Character2.state == CharacterManager.CharacterStates.Jump) ;
+                    else
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                }
+                else
+                {
+                    Character2.Damage(int.Parse(Character1.command[0]));
+                    Character1.command.Clear();
+                }
+            }
+        }
+
+        if (Character2.isAttack())
+        {
+            if (Math.Abs(Character1.position - Character2.position) <= 1)
+            {
+                if (Character1.isGuard())
+                {
+                    if (Character2.state == CharacterManager.CharacterStates.Attack_Low && Character1.state == CharacterManager.CharacterStates.Guard_Middle)
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                    if (Character2.state == CharacterManager.CharacterStates.Attack_Middle && Character1.state == CharacterManager.CharacterStates.Guard_Low)
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                }
+                else if (Character2.state == CharacterManager.CharacterStates.Attack_High)
+                {
+                    if (Character1.state == CharacterManager.CharacterStates.Crouch || Character1.state == CharacterManager.CharacterStates.Down) ;
+                    else
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                }
+                else if (Character2.state == CharacterManager.CharacterStates.Attack_Low)
+                {
+                    if (Character1.state == CharacterManager.CharacterStates.Jump) ;
+                    else
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                }
+                else
+                {
+                    Character1.Damage(int.Parse(Character2.command[0]));
+                    Character2.command.Clear();
+                }
+            }
+        }
+    }
+    void Grab()
+    {
+        if (Character1.isGrab())
+        {
+            if (Math.Abs(Character1.position - Character2.position) <= 1)
+            {
+                if (Character1.state == CharacterManager.CharacterStates.Grab_High)
+                {
+                    if (Character2.state == CharacterManager.CharacterStates.Crouch || Character2.state == CharacterManager.CharacterStates.Down) ;
+                    else
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                }
+                else if (Character1.state == CharacterManager.CharacterStates.Grab_Low)
+                {
+                    if (Character2.state == CharacterManager.CharacterStates.Jump) ;
+                    else
+                    {
+                        Character2.Damage(int.Parse(Character1.command[0]));
+                        Character1.command.Clear();
+                    }
+                }
+                else
+                {
+                    Character2.Damage(int.Parse(Character1.command[0]));
+                    Character1.command.Clear();
+                }
+            }
+        }
+        if (Character2.isGrab())
+        {
+            if (Math.Abs(Character2.position - Character1.position) <= 2)
+            {
+                if (Character2.state == CharacterManager.CharacterStates.Grab_High)
+                {
+                    if (Character1.state == CharacterManager.CharacterStates.Crouch || Character1.state == CharacterManager.CharacterStates.Down) ;
+                    else
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                }
+                else if (Character2.state == CharacterManager.CharacterStates.Grab_Low)
+                {
+                    if (Character1.state == CharacterManager.CharacterStates.Jump) ;
+                    else
+                    {
+                        Character1.Damage(int.Parse(Character2.command[0]));
+                        Character2.command.Clear();
+                    }
+                }
+                else
+                {
+                    Character1.Damage(int.Parse(Character2.command[0]));
+                    Character2.command.Clear();
+                }
+            }
+        }
     }
 }
 
