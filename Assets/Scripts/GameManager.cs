@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         timeSlider = GameObject.Find("TimeSlider").GetComponent<Slider>();
         turnText = GameObject.Find("TurnText").GetComponent<Text>();
 
+        
 
         TurnStart();
     }
@@ -46,9 +47,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         turnText.text = tempText;
+
         if (timer.Enabled)
         {
-            timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks) / 10000;
+            timeSlider.value = (float)(DateTime.Now.Ticks - initTime.Ticks) / 10000000;
         }
         else
         {
@@ -58,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     void TurnStart()
     {
+        Debug.Log("TurnStart");
         turn += 1;
         tempText = turn.ToString("D3");
         Input();
@@ -73,21 +76,21 @@ public class GameManager : MonoBehaviour
 
     void Input()
     {
-
         IM.InputStart();
-        timer.Start();
         initTime = DateTime.Now;
+        timer.Start();
+        
     }
 
     void TimerEventProcessor(object myObject, EventArgs myEventArgs)
     {
+        timer.Enabled = false;
         IM.InputEnd();
-        timer.Stop();
     }
 
     public void Process(string character1Cmd, string character2Cmd)
     {
-        /*
+        
         string line;
         string[] CommandData;
 
@@ -108,14 +111,14 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        */
+        
         Run();
 
     }
 
     void Run()
     {
-        /*
+        
         if (Character1.command.Count > 1)
         {
             EM.UpdateState(1, Character1.command[0]);
@@ -135,7 +138,6 @@ public class GameManager : MonoBehaviour
         {
             EM.UpdateState(2, "Rest");
         }
-        */
         TurnEnd();
     }
 
