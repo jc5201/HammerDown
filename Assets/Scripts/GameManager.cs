@@ -90,8 +90,16 @@ public class GameManager : MonoBehaviour
             while ((line = CommandList.ReadLine()) != null)
             {
                 CommandData = line.Split(',');
-                if (CommandData[0] == character1Cmd) Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
-                if (CommandData[0] == character2Cmd) Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
+                if (CommandData[0] == character1Cmd)
+                {
+                    Character1.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
+                    Character1.command.Add(CommandData[1]);
+                }
+                if (CommandData[0] == character2Cmd)
+                {
+                    Character2.command = CommandData.Skip(4).Take(int.Parse(CommandData[2])).ToList<string>();
+                    Character2.command.Add(CommandData[1]);
+                }
             }
         }
 
@@ -101,8 +109,25 @@ public class GameManager : MonoBehaviour
 
     void Run()
     {
-        EM.UpdateState(1, Character1.command[0]);
-        EM.UpdateState()
+        if (Character1.command.Count > 1)
+        {
+            EM.UpdateState(1, Character1.command[0]);
+            Character1.command.RemoveAt(0);
+        }
+        else
+        {
+            EM.UpdateState(1, "Rest");
+        }
+
+        if (Character2.command.Count > 1)
+        {
+            EM.UpdateState(2, Character2.command[0]);
+            Character2.command.RemoveAt(0);
+        }
+        else
+        {
+            EM.UpdateState(2, "Rest");
+        }
     }
 
     bool isGameOver()
