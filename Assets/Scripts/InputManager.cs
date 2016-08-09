@@ -80,10 +80,10 @@ public class InputManager : MonoBehaviour {
                 switch ((int)horiz)
                 {
                     case 1:
-                        cmd2 += "D";
+                        cmd2 += "A";
                         break;
                     case -1:
-                        cmd2 += "A";
+                        cmd2 += "D";
                         break;
                     case 0:
                         break;
