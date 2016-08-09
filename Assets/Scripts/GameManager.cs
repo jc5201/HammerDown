@@ -90,11 +90,11 @@ public class GameManager : MonoBehaviour
 
     public void Process(string character1Cmd, string character2Cmd)
     {
-        
+        Debug.Log("Process Start\n" + character1Cmd + "\n" + character2Cmd);
         string line;
         string[] CommandData;
 
-        using (StreamReader CommandList = new StreamReader("/Assets/CommandList.csv", System.Text.Encoding.Default))
+        using (StreamReader CommandList = new StreamReader("Assets/CommandList.csv"))
         {
             while ((line = CommandList.ReadLine()) != null)
             {
@@ -111,14 +111,16 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
+
+        Debug.Log("Cmd End");
+
         Run();
 
     }
 
     void Run()
     {
-        
+        Debug.Log("Run Start");
         if (Character1.command.Count > 1)
         {
             EM.UpdateState(1, Character1.command[0]);
