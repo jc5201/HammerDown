@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     InputManager IM;
     EventManager EM;
     Timer timer = new Timer();
+    Timer eTimer = new Timer();
 
     Slider timeSlider;
     DateTime initTime;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
         timeInterval = 1000;
         timer.Interval = timeInterval;
         timer.Elapsed += new ElapsedEventHandler(TimerEventProcessor);
+        eTimer.Interval = timeInterval / 2;
+        eTimer.Elapsed += new ElapsedEventHandler(emptyTimerHandler); 
         Character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
         Character2 = GameObject.Find("Character2").GetComponent<CharacterManager>();
         IM = GetComponent<InputManager>();
@@ -79,12 +82,18 @@ public class GameManager : MonoBehaviour
     {
         IM.InputStart();
         initTime = DateTime.Now;
-        if(Character1.state == CharacterManager.CharacterStates.Stand || Character1.state == CharacterManager.CharacterStates.Stand) timer.Start();
+        if(Character1.state == CharacterManager.CharacterStates.Stand || Character2.state == CharacterManager.CharacterStates.Stand) timer.Start();
         else
         {
-            Process("", "");
+            eTimer.Start();
         }
         
+    }
+
+    void emptyTimerHandler(object myObject, EventArgs myEventArgs)
+    {
+        eTimer.Enabled = false;
+        Process("", "");
     }
 
     void TimerEventProcessor(object myObject, EventArgs myEventArgs)
@@ -137,7 +146,7 @@ public class GameManager : MonoBehaviour
             switch (Character1.command[0])
             {
                 case "delay":
-                    Character1.state = CharacterManager.CharacterStates.Stand;
+                    Character1.state = CharacterManager.CharacterStates.Delay;
                     break;
                 case "moving-front": 
                     Character1.state = CharacterManager.CharacterStates.Move;
@@ -201,7 +210,7 @@ public class GameManager : MonoBehaviour
             switch (Character2.command[0])
             {
                 case "delay":
-                    Character2.state = CharacterManager.CharacterStates.Stand;
+                    Character2.state = CharacterManager.CharacterStates.Delay;
                     break;
                 case "moving-front":
                     Character2.state = CharacterManager.CharacterStates.Move;

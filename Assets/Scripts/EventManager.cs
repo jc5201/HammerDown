@@ -9,8 +9,8 @@ public class EventManager : MonoBehaviour {
     float position2=0;
     SpriteRenderer sprite1;
     SpriteRenderer sprite2;
-    int spriteIndex1;
-    int spriteIndex2;
+    int spriteIndex1=0;
+    int spriteIndex2=0;
     bool flag = false;
 
     public Sprite[] sprite = new Sprite[30];

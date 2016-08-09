@@ -63,12 +63,13 @@ public class CharacterManager : MonoBehaviour {
         Attack_High, Attack_Middle, Attack_Low,
         Guard_Middle, Guard_Low,
         Grab_High, Grab_Middle, Grab_Low,
-        Move_Back,Move_Back_Half,Dash_Back
+        Move_Back,Move_Back_Half,Dash_Back,
+        Delay
     }
 
     public void Damage(int hit)
     {
-        HP -= hit;
+        HP -= hit; 
         command.Clear();
         state = CharacterStates.Damage;
     }
