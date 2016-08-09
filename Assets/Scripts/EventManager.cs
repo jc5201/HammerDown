@@ -8,6 +8,8 @@ public class EventManager : MonoBehaviour {
     float position1=0;
     float position2=0;
 
+    public Sprite[] sprite = new Sprite[30];
+
     // Use this for initialization
     void Start () {
         character1 = GameObject.Find("Character1").GetComponent<CharacterManager>();
@@ -31,6 +33,15 @@ public class EventManager : MonoBehaviour {
 
     public void UpdateState(int code, string state)
     {
+        if (code == 1)
+        {
+            
+            character1.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = sprite[(int)System.Enum.Parse(typeof(CharacterManager.CharacterStates), state)];
+        }
+        else if ( code == 2)
+        {
+            character2.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = sprite[(int)System.Enum.Parse(typeof(CharacterManager.CharacterStates), state)];
+        }
         // TODO: Sprite 교ㅕ체
     }
 }
