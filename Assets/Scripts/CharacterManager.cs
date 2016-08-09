@@ -29,7 +29,7 @@ public class CharacterManager : MonoBehaviour {
     int num=0;
     
 	void Start () {
-        state = CharacterStates.Rest;
+        state = CharacterStates.Stand;
         HP = 100;
         if (gameObject.name == "Character1") num = 1;
         else num = 2;
@@ -44,14 +44,16 @@ public class CharacterManager : MonoBehaviour {
     public enum CharacterStates
 
     {
-        Rest,
+        Stand,
+        Damage,
         Dead,
-        Move,
-        Down,
+        Move, Dash,
+        Down, Standing,
+        Crouch,
         Jump,
-        Attack,
-        Guard,
-        Grab
+        Attack_High, Attack_Middle, Attack_Low,
+        Guard_Middle, Guard_Low,
+        Grab_High, Grab_Middle, Grab_Low,
     }
 
 }

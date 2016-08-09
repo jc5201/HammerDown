@@ -4,8 +4,8 @@ ddu,6,5,delay,moving-front,moving-front,delay,punch-middle
 ddi,7,5,delay,moving-front,moving-front,delay,kick-middle
 du,4,3,delay,moving-front,punch-middle,,
 di,5,3,delay,moving-front,kick-middle,,
-wu,5,4,delay,moving,jump,punch-high,
-wi,6,4,delay,moving,jump,kick-high,
+wu,5,4,delay,moving-front-half,jump,punch-high,
+wi,6,4,delay,moving-front-half,jump,kick-high,
 wk,15,4,delay,delay,jump,grab-high,
 a,0,2,moving-back,moving-back,,,
 aa,0,3,delay,moving-back,moving-back,,
