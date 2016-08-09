@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Timers;
+using System.IO;
 
 public class GameManager : MonoBehaviour {
 
@@ -78,15 +79,23 @@ public class GameManager : MonoBehaviour {
 
     public void Process(string character1Cmd, string character2Cmd)
     {
-        int i;
-        for (i = 0; i < character1Cmd.Length; i++)
-        {
+        string line;
+        string[] CommandData;
 
-        }
-        for (i = 0; i < character2Cmd.Length; i++)
+        using (StreamReader CommandList = new StreamReader("/Assets/CommandList.csv", System.Text.Encoding.Default))
         {
-
+            while ((line = CommandList.ReadLine()) != null)
+            {
+                CommandData = line.Split(',');
+                if (CommandData[0] == character1Cmd)    Character1.
+                
+            }
         }
+
+    }
+    
+    void Run()
+    {
 
     }
 

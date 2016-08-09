@@ -14,10 +14,19 @@ public class CharacterManager : MonoBehaviour {
         get; set;
     }
 
+    public float position
+    {
+        get; set;
+    }
+
+    public string[] command         
+    {
+        get; set;
+    }
+
     Slider SliderCom;
     int num=0;
     
-    // Use this for initialization
 	void Start () {
         state = CharacterStates.Rest;
         HP = 100;
